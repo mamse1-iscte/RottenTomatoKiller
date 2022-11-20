@@ -1,0 +1,62 @@
+{% extends "votacao/mostrarFilmes.html" %}
+
+
+{% block titulo %}
+   <title>Minhalista</title>
+{% endblock %}
+
+<style>
+button {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>
+
+
+   <title>WatchList</title>
+
+
+
+{% block abcdef %}
+     <h1 style="color: #23232e"> Minha Lista </h1>
+    <hr>
+    <br>
+    <br>
+
+             {% if latest_movies_list %}
+                 <div class="content-container">
+                    <div class="movie-list-container">
+                        <div class="movie-list">
+                             {% for watchlist in latest_movies_list %}
+                                 <div class="box">
+                                    {% block filmeouserie %}
+                                        <div class="movie-list-item">
+                                         <a href="{% url 'votacao:filmePage' watchlist.identificador_conteudo.id %}"><img class="movie-list-item-img" src="{{ watchlist.identificador_conteudo.imagem }}" height="300" width="200" alt="" & onerror="this.style.display='none'"/><h2 style="color: #23232e"> {{ watchlist.identificador_conteudo.filme_texto }} </h2></a>
+                                        <hr>
+                                        <br>
+                                        <br>
+                                        </div>
+                                    {% endblock %}
+                                 </div>
+                             {% endfor %}
+                         </div>
+                    </div>
+                </div>
+              {% else %}
+                <p> Ainda não adicionou nada à sua lista</p>
+          {% endif %}
+
+
+{% endblock %}
+
+{% block videos %}
+{% endblock %}
+
+

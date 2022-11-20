@@ -1,0 +1,91 @@
+{% extends "votacao/mostrarFilmes.html" %}
+
+{% block titulo %}
+    <title>Genero</title>
+{% endblock%}
+
+
+   {% block abcdef %}
+{% block tituloFilmesouseries %}
+
+        {% if genero == 1 %}
+              <h1 style="color: #23232e"> Género pesquisado : Romance</h1>
+         {% endif %}
+      {% if genero == 2 %}
+              <h1 style="color: #23232e"> Género pesquisado : Ação</h1>
+         {% endif %}
+      {% if genero == 3 %}
+              <h1 style="color: #23232e"> Género pesquisado : Comédia</h1>
+         {% endif %}
+      {% if genero == 4 %}
+              <h1 style="color: #23232e"> Género pesquisado : Drama</h1>
+         {% endif %}
+      {% if genero == 5 %}
+              <h1 style="color: #23232e"> Género pesquisado : Aventura</h1>
+         {% endif %}
+      {% if genero == 6 %}
+              <h1 style="color: #23232e"> Género pesquisado : Documentário</h1>
+         {% endif %}
+      {% if genero == 7 %}
+              <h1 style="color: #23232e"> Género pesquisado : Fantasia</h1>
+         {% endif %}
+      {% if genero == 8 %}
+              <h1 style="color: #23232e"> Género pesquisado : Ficção Cientifica</h1>
+         {% endif %}
+      {% if genero == 9 %}
+              <h1 style="color: #23232e"> Género pesquisado : Mistério</h1>
+         {% endif %}
+      {% if genero == 10 %}
+              <h1 style="color: #23232e"> Género pesquisado : Suspense</h1>
+         {% endif %}
+      {% if genero == 11 %}
+              <h1 style="color: #23232e"> Género pesquisado : Thriller</h1>
+         {% endif %}
+      {% if genero == 12 %}
+              <h1 style="color: #23232e"> Género pesquisado : Terror</h1>
+         {% endif %}
+      {% if genero == 13 %}
+              <h1 style="color: #23232e"> Género pesquisado : Crime</h1>
+      {% endif %}
+
+
+{% endblock %}
+
+
+
+
+
+
+      <hr>
+      <br>
+        <br>
+      {% if latest_movies_list %}
+          <div class="content-container">
+            <div class="movie-list-container">
+                <div class="movie-list">
+                    {% for filme in latest_movies_list %}
+                        {% block filmeouserie %}
+                           {% if  filme.genero_id_id == genero or filme.subgenero_id_id == genero or filme.subgenero2_id_id == genero %}
+                                    <div class="movie-list-item">
+                                        <a href="{% url 'votacao:filmePage' filme.id %}"><img class="movie-list-item-img" src="{{ filme.imagem }}" height="315px" width="200px" alt="" & onerror="this.style.display='none'"/><h2 style="color: #23232e"> {{ filme.filme_texto }} </h2></a>
+                                        <hr>
+                                        <br>
+                                        <br>
+                                    </div>
+                            {% endif %}
+                        {% endblock %}
+                    {% endfor %}
+                </div>
+            </div>
+          </div>
+      {% else %}
+          <p>Nao ha filmes disponiveis.</p>
+      {% endif %}
+{% endblock %}
+
+
+{% block videos%}
+
+ {% endblock %}
+
+

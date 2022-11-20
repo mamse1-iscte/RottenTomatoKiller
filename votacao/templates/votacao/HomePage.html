@@ -1,0 +1,301 @@
+    <!DOCTYPE html>
+<html lang="en">
+{% load static %}
+  <head>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      {% block titulo %}
+    <title>Home</title>
+      {% endblock%}
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/style.css' %}" />
+      <link  href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+
+
+<link rel="icon" href="https://cdn.pixabay.com/photo/2016/02/23/17/29/banana-1218133_1280.png">
+
+  </head>
+
+  <body>
+{% block cabecalho %}
+    <header>
+
+
+
+
+
+<script>
+function myFunction() {
+   var element = document.body;
+   element.classList.toggle("dark-mode");
+}
+</script>
+
+      <nav >
+             <div class="toggle" >
+                    <i class="fas fa-moon toggle-icon"></i>
+                    <i class="fas fa-sun toggle-icon"></i>
+                    <div class="toggle-ball" onclick="myFunction()"></div>
+                </div>
+
+          <a class="logo"  href="{% url 'votacao:HomePage' %}">🍌Rotten Banana🍌</a>
+        <div class="mobile-menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+        <ul class="nav-list">
+            <form action="{% url 'votacao:pesquisa' %}" class="formMenu" role="search" id="form">
+              <input class = "inputSearchBar" type="search" id="query" name="q"
+               placeholder="Search..."
+               aria-label="Search through site content">
+
+              <button class="buttonMenu" type="submit">
+                <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+              </button>
+            </form>
+
+
+
+            <li><a href="{% url 'votacao:HomePage' %}">Inicio</a>
+            <li><a href="{% url 'votacao:mostrarFilmes' %}"> Filmes</a></li>
+            <li><a href="{% url 'votacao:mostrarSeries' %}"> Séries</a></li>
+
+
+
+            {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                        <li><a href="{% url 'votacao:criarFilme' %}"> Criar Filme/Série </a></li>
+                        <li><a href="{% url 'votacao:informacaoPessoal' %}"> {{user.username}}</a></li>
+                        <li><a href="{% url 'votacao:logoutview' %}"> LOG OUT</a></li>
+
+                    {% else%}
+                        <li><a href="{% url 'votacao:myList' %}"> Minha Lista </a></li>
+                        <li><a href="{% url 'votacao:informacaoPessoal' %}"> {{user.username}}</a></li>
+                        <li><a href="{% url 'votacao:logoutview' %}"> LOG OUT</a></li>
+                    {% endif%}
+
+            {% else%}
+
+                <li><a href="{% url 'votacao:criaConta' %}"> Criar Conta</a></li>
+                <li><a href="{% url 'votacao:fazerLogin' %}"> LOG IN</a></li>
+
+            {% endif%}
+
+        </ul>
+      </nav>
+    </header>
+
+    <main></main>
+    <script src="{% static 'votacao/scripts.js' %}"></script>
+
+<script>
+
+const arrows = document.querySelectorAll(".arrow");
+const movieLists = document.querySelectorAll(".movie-list");
+
+arrows.forEach((arrow, i) => {
+  const itemNumber = movieLists[i].querySelectorAll("img").length;
+  let clickCounter = 0;
+  arrow.addEventListener("click", () => {
+    const ratio = Math.floor(window.innerWidth / 270);
+    clickCounter++;
+    if (itemNumber - (4 + clickCounter) + (4 - ratio) >= 0) {
+      movieLists[i].style.transform = `translateX(${
+        movieLists[i].computedStyleMap().get("transform")[0].x.value - 300
+      }px)`;
+    } else {
+      movieLists[i].style.transform = "translateX(0)";
+      clickCounter = 0;
+    }
+  });
+
+  console.log(Math.floor(window.innerWidth / 270));
+});
+
+//TOGGLE
+
+const ball = document.querySelector(".toggle-ball");
+const items = document.querySelectorAll(
+  ".container,.movie-list-title,.navbar-container,.sidebar,.left-menu-icon,.toggle"
+);
+
+ball.addEventListener("click", () => {
+  items.forEach((item) => {
+    item.classList.toggle("active");
+  });
+  ball.classList.toggle("active");
+});
+
+</script>
+
+
+
+<script>
+class MobileNavbar {
+  constructor(mobileMenu, navList, navLinks) {
+    this.mobileMenu = document.querySelector(mobileMenu);
+    this.navList = document.querySelector(navList);
+    this.navLinks = document.querySelectorAll(navLinks);
+    this.activeClass = "active";
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  animateLinks() {
+    this.navLinks.forEach((link, index) => {
+      link.style.animation
+        ? (link.style.animation = "")
+        : (link.style.animation = `navLinkFade 0.5s ease forwards ${
+            index / 7 + 0.3
+          }s`);
+    });
+  }
+
+  handleClick() {
+    this.navList.classList.toggle(this.activeClass);
+    this.mobileMenu.classList.toggle(this.activeClass);
+    this.animateLinks();
+  }
+
+  addClickEvent() {
+    this.mobileMenu.addEventListener("click", this.handleClick);
+  }
+
+  init() {
+    if (this.mobileMenu) {
+      this.addClickEvent();
+    }
+    return this;
+  }
+}
+
+const mobileNavbar = new MobileNavbar(
+  ".mobile-menu",
+  ".nav-list",
+  ".nav-list li",
+);
+mobileNavbar.init();
+</script>
+{% endblock %}
+
+<div class="center" >
+
+{% block filmes%}
+ <br>
+
+     <h1 style="color: #23232e"> Novidades </h1>
+    <hr>
+     <br>
+     <br>
+
+    <div class="slideshow-container" >
+        {% if latest_movies_list %}
+             {% for filme in latest_movies_list %}
+                 <div class="mySlides fade" style="text-align:center">
+                    <br>
+                     <a href="{% url 'votacao:filmePage' filme.id %}"><img src="{{ filme.imagem }}" height="400" width="250" alt="" & onerror="this.style.display='none'"/><h2 style="color: #23232e"> {{ filme.filme_texto }} </h2></a>
+
+                 </div>
+             {% endfor %}
+          {% else %}
+              <p>Nao ha filmes disponiveis.</p>
+        {% endif %}
+    </div>
+
+
+<br>
+
+<div style="text-align:center">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+
+</div>
+
+
+<script>
+let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 4000); // Change image every 4 seconds
+}
+</script>
+
+  <br>
+      <br>
+      <br>
+
+            <h1 style="color: #23232e"> Filmes/Séries Com Melhor Rating </h1>
+
+      <hr>
+      <br>
+        <br>
+
+      {% if latest_movies_list %}
+          <div class="content-container">
+            <div class="movie-list-container">
+                <div class="movie-list">
+                    {% for filme in best_movies_list %}
+
+
+                                <div class="movie-list-item">
+                                    <a href="{% url 'votacao:filmePage' filme.id %}"><img class="movie-list-item-img" src="{{ filme.imagem }}" height="315px" width="200px" alt="" & onerror="this.style.display='none'"/><h2 style="color: #23232e"> {{ filme.filme_texto }} </h2></a>
+                                    <hr>
+                                    <br>
+                                    <br>
+                                </div>
+
+
+                    {% endfor %}
+                </div>
+            </div>
+          </div>
+      {% else %}
+          <p>Nao ha filmes disponiveis.</p>
+      {% endif %}
+{% endblock %}
+
+{% block categorias%}
+{% endblock %}
+{% block filme%}
+{% endblock %}
+{% block videos %}
+{% endblock %}
+
+<br>
+<br>
+{% block footer %}
+<footer style="color: #23232e">
+    <nav>
+        <h2 style="color: #c7ba50"> Guilherme Carvalho Nº92908</h2>
+        <h2 style="color: #c7ba50"> João Bicho Nº92425</h2>
+        <h2 style="color: #c7ba50"> Miguel Martins Nº93173 </h2>
+    </nav >
+</footer>
+{% endblock %}
+</div>
+
+
+
+</body>
+</html>

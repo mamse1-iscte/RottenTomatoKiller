@@ -1,0 +1,147 @@
+    {% extends "votacao/HomePage.html" %}
+
+{% block titulo %}
+    <title>PaginaFilme</title>
+{% endblock%}
+
+{% block filmes %}
+
+<Div   id = "comentário" class="comment" style = "background-color: #717171 ; height: 700px; width: 100%; float: left; ">
+ <Div   id = "container"   style = "width: 100%;">
+ <Div   id = "header"   style = "background-color: #23232e; margin-bottom: 10px;">
+ <H1   style = "margin-bottom: 0 ; color: #c7ba50;"> {{ filme.filme_texto }} </h1> </div>
+
+    <Div   id = "menu"   style = "background-color: #23232e; height: 315px; width: 200px; float: left;  padding: 10px; padding-left: 10px;" >
+    <img id ="menu"  src="{{ filme.imagem }}" height="315" width="200" alt="" & onerror="this.style.display='none'"/> </div>
+
+ <Div   id = "content"   style = "background-color: #717171 ; height: 315px; width: 500px; float: left; padding: 10px; padding-left: 10px;"> {{filme.filme_descricao}}  </div>
+ <Div   id = "content"   style = "background-color: #23232e ; height: 435px; width: 560px; float: right; padding: 10px;"> {{filme.trailer | safe }}  <br><br><p style="color: #c7ba50"> <u><b>Atores:</b></u> {{filme.atores}}
+
+             {% if user.is_superuser %}
+<br>
+           <form method="POST">
+                {% csrf_token %}
+               <br>
+            <button class="glow-on-hover"  type="submit"formaction="{% url 'votacao:apagarFilmeOuSerie' filme.id %}">Apagar Filme ou Serie</button>
+
+         </form>
+
+        {% endif %}
+
+ </div>
+
+ <Div   id = "genero"   style = "background-color: #23232e ; height: 100px; width: 200px; float: left; padding: 10px;"> <p style="color: #c7ba50"> {{filme.genero_id.genero }}
+
+
+     {% if filme.subgenero_id_id != 14 %}
+        / {{filme.subgenero_id.genero }}
+     {% endif %}
+
+     {% if filme.subgenero2_id_id != 14 %}
+         / {{filme.subgenero2_id.genero }}
+     {% endif %}
+<br><br>
+         <form method="POST">
+            {% csrf_token %}
+
+
+{% if user.is_authenticated %}
+             {% if not user.is_superuser %}
+                 {% if  watchList %}
+
+            <button class="glow-on-hover"  type="submit"formaction="{% url 'votacao:delTolist' filme.id %}">Remove from WatchList</button>
+
+                 {% else %}
+            <button class="glow-on-hover"  type="submit" formaction="{% url 'votacao:addTolist' filme.id %}">Add to WatchList</button>
+ {% endif %}
+    {% endif %}
+{% endif %}
+        </form>
+</div>
+
+
+ <Div   id = "rating"   style = "background-color: #23232e ; height: 100px; width: 512.1055px; float: left; padding: 10px; padding-right: 10px;" >
+        <h2 style="color: #c7ba50"> Rating da Audiência:  {{ filme.filme_ranking_critica}}🍌 </h2>
+</div>
+
+  {% if user.is_authenticated %}
+ <Div   id = "comentário" class="comment" style = "background-color: #717171 ; height: 400px; width: 100%; float: left; ">
+                 <hr>
+                <H1   style = "margin-bottom: 0 ; color: #c7ba50;"> Comentário </h1>
+                <form action="{% url 'votacao:criarComentario' filme.id %}"  method="POST">
+                {% csrf_token %}
+                   <br>
+                   <br>
+                    <h2>Insere o rating 0 a 10 bananas:</h2>
+
+                        <div class="rating">
+                      <input type="radio" name="rating" value="10" id="10"><label for="10" ><div class="divbanana">🍌</div></label>
+                      <input type="radio" name="rating" value="9" id="9"><label for="9" ><div class="divbanana">🍌</div></label>
+                      <input type="radio" name="rating" value="8" id="8"><label for="8" ><div class="divbanana">🍌</div></label>
+                      <input type="radio" name="rating" value="7" id="7"><label for="7" ><div class="divbanana">🍌</div></label>
+                      <input type="radio" name="rating" value="6" id="6"><label for="6" ><div class="divbanana">🍌</div></label>
+                      <input type="radio" name="rating" value="5" id="5"><label for="5" ><div class="divbanana">🍌</div></label>
+                      <input type="radio" name="rating" value="4" id="4"><label for="4" ><div class="divbanana">🍌</div></label>
+                      <input type="radio" name="rating" value="3" id="3"><label for="3" ><div class="divbanana">🍌</div></label>
+                      <input type="radio" name="rating" value="2" id="2"><label for="2" ><div class="divbanana">🍌</div></label>
+                      <input type="radio" name="rating" value="1" id="1"><label for="1" required><div class="divbanana">🍌</div></label>
+                        </div>
+
+                    <textarea type="text" id="comentario_texto" rows="10" cols="50" placeholder="Faça o seu Comentário em Relação ao filme" name="comentario_texto" ></textarea>
+<br>
+
+                    <button class="Button"  type="submit" >Submit</button>
+
+
+              </form>
+
+    </div>
+{% endif %}
+    <div   id = "comentarioLista"  style = "background-color: #c7ba50 ; height: 2000px; width: 100%; float: left;">
+                 <hr>
+                <H1   style = "margin-bottom: 0 ; color: #c7ba50;"> Lista de Comentários </h1>
+        {% for comentario in latest_movies_list %}
+              <div class="row">
+                <div class="col-md-8">
+                    <div class="media g-mb-30 media-comment" style = "padding-left: 20px; ">
+                        <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30" style = "width: 90%;padding-left: 10px; ">
+                            <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="{{ comentario.user.critico.imagem }}" alt="" & onerror="this.style.display='none'" class="avatar">
+                            <p style="text-align: right"> Rating Atribuído: {{comentario.rating}}🍌</p>
+                          <div class="g-mb-15">
+                            <h5 class="h5 g-color-gray-dark-v1 mb-0">{{ comentario.user.username }}</h5>
+                            <span class="g-color-gray-dark-v4 g-font-size-12">{{ comentario.pub_data }}</span>
+                          </div>
+                            <br>
+                          <p>{{ comentario.comentario_texto }} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+</div>
+ </div>
+
+
+
+
+
+
+<script>
+    const button = document.querySelector('.btn')
+
+button.addEventListener('click', () => {
+    button.classList.toggle('liked')
+})
+
+
+
+
+</script>
+
+{% endblock %}
+
+{% block videos %}
+{% endblock %}
+{% block footer %}
+{% endblock %}
+</div>

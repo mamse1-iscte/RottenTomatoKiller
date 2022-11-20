@@ -1,0 +1,165 @@
+{% extends "votacao/HomePage.html" %}
+
+<title>CriarFilme</title>
+
+<style>
+
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+
+body {background-color: #23232e;}
+
+h1 {
+	color: #c7ba50;
+}
+p {
+	color: #c7ba50
+}
+label {
+	color: #c7ba50
+}
+</style>
+
+
+{% block titulo %}
+   <title>Criar Filme/Serie</title>
+{% endblock %}
+
+{% block filmes %}
+{% endblock %}
+
+
+{% block videos %}
+
+            <h1>Introduza um novo Filme ou Série </h1>
+    <form action="{% url 'votacao:criarFilme' %}" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+
+
+        <br>
+        <br>
+                 <label for="nome_filme"><b>Introduza o nome do Filme ou Série:</b></label>
+        <input type="text" id="nome_filme" placeholder="Enter nome do filme" name="nome_filme" required>
+<br>
+        <br>
+
+          <input type="file" name="myfile">
+        <br>
+<br>
+<label for="genero">Escolher Género:</label>
+  <select name="genero" id="genero">
+      <option value="1">Romance</option>
+    <option value="2">Ação</option>
+    <option value="3">Comédia</option>
+    <option value="4">Drama</option>
+      <option value="5">Aventura</option>
+      <option value="6">Documentário</option>
+       <option value="7">Fantasia</option>
+      <option value="8">Ficção Cientifica</option>
+       <option value="9">Mistério</option>
+      <option value="10">Suspense</option>
+      <option value="11">Thriller</option>
+         <option value="12">Terror</option>
+      <option value="13">Crime</option>
+
+  </select>
+
+
+        <br>
+        <br>
+
+        <label for="subgenero">Escolher Sub Género:</label>
+  <select name="subgenero" id="subgenero">
+         <option value="14">Nada</option>
+      <option value="1">Romance</option>
+    <option value="2">Ação</option>
+    <option value="3">Comédia</option>
+    <option value="4">Drama</option>
+      <option value="5">Aventura</option>
+      <option value="6">Documentário</option>
+       <option value="7">Fantasia</option>
+      <option value="8">Ficção Cientifica</option>
+       <option value="9">Mistério</option>
+      <option value="10">Suspense</option>
+      <option value="11">Thriller</option>
+          <option value="12">Terror</option>
+      <option value="13">Crime</option>
+
+
+
+
+  </select>
+
+        <br>
+           <br>
+
+
+        <label for="subgenero2">Escolher Sub Género:</label>
+  <select name="subgenero2" id="subgenero2">
+         <option value="14">Nada</option>
+         <option value="1">Romance</option>
+    <option value="2">Ação</option>
+    <option value="3">Comédia</option>
+    <option value="4">Drama</option>
+      <option value="5">Aventura</option>
+      <option value="6">Documentário</option>
+       <option value="7">Fantasia</option>
+      <option value="8">Ficção Cientifica</option>
+       <option value="9">Mistério</option>
+      <option value="10">Suspense</option>
+      <option value="11">Thriller</option>
+          <option value="12">Terror</option>
+      <option value="13">Crime</option>
+
+
+
+  </select>
+
+
+
+<br>
+        <br>
+
+         <label for="filme_descricao"><b>Introduza a descrição do Filme ou Série:</b></label>
+           <br>
+           <br>
+
+
+        <textarea type="text" id="filme_descricao" rows="10" cols="50" placeholder="Ex: Descrição do Filme/Série" name="filme_descricao" ></textarea>
+
+         <br>
+        <br>
+
+
+         <label for="anoLancamento">Ano de Lançamento:</label>
+        <input type="number" id="anoLancamento" value="2022" name="anoLancamento">
+
+         <br>
+        <br>
+
+        <label for="trailer"><b>Introduza o link do trailer do Filme ou Série:</b></label>
+        <br>
+        <textarea type="text" id="trailer" rows="10" cols="50" placeholder="Enter trailer do Filme/Série" name="trailer" ></textarea>
+
+
+        <br>
+        <br>
+        <input type="radio" id="filme" name="is_filme" value= 1>
+        <label for="filme" >Filme</label><br>
+        <input type="radio" id="serie" name="is_filme" value= 0>
+        <label for="serie">Série</label><br>
+
+
+
+                <textarea type="text" id="atores" rows="5" cols="50" placeholder="Enter atores do Filme/Série" name="atores" ></textarea>
+
+
+ <br>
+
+        <input type="submit" value="Submit">
+
+    </form>
+
+{% endblock %}
+
+

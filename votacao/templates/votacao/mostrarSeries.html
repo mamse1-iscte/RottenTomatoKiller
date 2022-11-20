@@ -1,0 +1,174 @@
+{% extends "votacao/HomePage.html" %}
+
+
+{% block titulo %}
+   <title>Series</title>
+{% endblock %}
+
+
+ <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <title>Séries</title>
+
+
+</head>
+
+   <body>
+
+     {% block filmes%}
+{% endblock %}
+
+
+{% block categorias%}
+<form action="{% url 'votacao:pesquisaGeneroSerie'  %}"  method="POST">
+  {% csrf_token %}
+
+
+   <nav class ="dropdownMenu">
+    <ul>
+         <li> <a href="#">Género</a>
+             <ul>
+
+                 <li> <button type="submit"  name="genero" value=1>Romance</button></li>
+                 <br>
+                 <li><button type="submit"  name="genero" value=2>Ação</button> </li>
+                  <br>
+                 <li><button type="submit"  name="genero" value=3>Comédia</button> </li>
+                  <br>
+                 <li><button type="submit"  name="genero" value=4>Drama</button> </li>
+                 <br>
+                 <li><button type="submit"  name="genero" value=5>Aventura</button> </li>
+                 <br>
+                 <li><button type="submit"  name="genero" value=6>Documentário</button> </li>
+                 <br>
+                 <li><button type="submit"  name="genero" value=7>Fantasia</button> </li>
+                 <br>
+                  <li><button type="submit"  name="genero" value=8>Ficção Cientifica </button> </li>
+                 <br>
+                 <li><button type="submit"  name="genero" value=9>Mistério</button> </li>
+                  <br>
+                 <li><button type="submit"  name="genero" value=10>Suspense</button> </li>
+                 <br>
+                 <li><button type="submit"  name="genero" value=11>Thriller</button> </li>
+                 <br>
+                 <li><button type="submit"  name="genero" value=12>Terror</button> </li>
+                  <br>
+                 <li><button type="submit"  name="genero" value=13>Crime</button> </li>
+
+
+             </ul>
+         </li>
+
+            <li> <a href="">Rating</a>
+              <ul>
+                    <li> <button type="submit"  name="genero" value=90>90+ Bananas</button></li>
+                    <br>
+                   <li> <button type="submit"  name="genero" value=70>70+ Bananas</button></li>
+                    <br>
+                   <li> <button type="submit"  name="genero" value=50>50+ Bananas</button></li>
+
+              </ul>
+
+             </li>
+    </ul>
+</nav>
+ </form>
+
+
+{% endblock %}
+
+
+{% block filme %}
+  <br>
+    </body>
+
+
+
+        {% block abcdef %}
+        {% block tituloFilmesouseries %}
+            <h1 style="color: #23232e">   Novidades Séries </h1>
+        {% endblock %}
+      <hr>
+      <br>
+        <br>
+
+      {% if latest_movies_list %}
+          <div class="content-container">
+            <div class="movie-list-container">
+                <div class="movie-list">
+                    {% for filme in latest_movies_list %}
+                        {% block filmeouserie %}
+                {% if not filme.is_filme  %}
+                        <div class="movie-list-item">
+                            <a href="{% url 'votacao:filmePage' filme.id %}"><img class="movie-list-item-img" src="{{ filme.imagem }}" height="315px" width="200px" alt="" & onerror="this.style.display='none'"/><h2 style="color: #23232e"> {{ filme.filme_texto }} </h2></a>
+                            <hr>
+                            <br>
+                            <br>
+                        </div>
+             {% endif %}
+
+ {% endblock %}
+                    {% endfor %}
+                </div>
+            </div>
+          </div>
+      {% else %}
+          <p>Nao ha filmes disponiveis.</p>
+      {% endif %}
+
+
+{% endblock %}
+
+
+{% endblock %}
+
+{% block videos%}
+    {% block MelhorRanking %}
+        {% block tituloRankingFilmesouseries %}
+            <h1 style="color: #23232e">   Melhor Rating  </h1>
+        {% endblock %}
+      <hr>
+      <br>
+        <br>
+
+      {% if latest_movies_list %}
+          <div class="content-container">
+            <div class="movie-list-container">
+                <div class="movie-list">
+                    {% for filme in best_movies_list %}
+                       {% block filmeouserie22 %}
+                             {% if not filme.is_filme %}
+                                 <div class="movie-list-item">
+                                     <a href="{% url 'votacao:filmePage' filme.id %}"><img class="movie-list-item-img" src="{{ filme.imagem }}" height="315px" width="200px" alt="" & onerror="this.style.display='none'"/><h2 style="color: #23232e"> {{ filme.filme_texto }} </h2></a>
+                                          <hr>
+                                      <br>
+                                      <br>
+                                 </div>
+                             {% endif %}
+ {% endblock %}
+                    {% endfor %}
+                </div>
+            </div>
+          </div>
+      {% else %}
+          <p>Nao ha filmes disponiveis.</p>
+      {% endif %}
+
+
+    {% endblock %}
+{% endblock %}
+
+
+
+
+
+
+
+

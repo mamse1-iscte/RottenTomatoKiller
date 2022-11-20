@@ -1,0 +1,34 @@
+{% extends "votacao/mostrarFilmes.html" %}
+
+{% block titulo %}
+    <title>Pesquisa</title>
+{% endblock%}
+
+{% block tituloFilmesouseries %}
+
+     {% if genero == 90 %}
+         <h1 style="color: #23232e"> Rating Pesquisado : +90 Bananas</h1>
+    {% elif genero == 70 %}
+         <h1 style="color: #23232e"> Rating Pesquisado : +70 Bananas</h1>
+    {% elif genero == 50 %}
+         <h1 style="color: #23232e"> Rating Pesquisado : +50 Bananas</h1>
+    {% else %}
+         <h1 style="color: #23232e"> Procura : {{ pesquisa }}</h1>
+    {% endif %}
+
+
+{% endblock %}
+
+{% block filmeouserie %}
+     <div class="movie-list-item">
+        <a href="{% url 'votacao:filmePage' filme.id %}"><img class="movie-list-item-img" src="{{ filme.imagem }}" height="315px" width="200px" alt="" & onerror="this.style.display='none'"/><h2 style="color: #23232e"> {{ filme.filme_texto }} </h2></a>
+        <hr>
+        <br>
+        <br>
+    </div>
+
+ {% endblock %}
+
+{% block videos%}
+
+ {% endblock %}

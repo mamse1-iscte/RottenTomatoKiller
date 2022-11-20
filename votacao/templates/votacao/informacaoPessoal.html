@@ -1,0 +1,111 @@
+{% extends "votacao/HomePage.html" %}
+
+<style>
+ .flipcard body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 300px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+.flip-card-back {
+  background-color: #23232e;
+  color: white;
+  transform: rotateY(180deg);
+}
+</style>
+
+
+{% block titulo %}
+   <title>Informação Pessoal</title>
+{% endblock %}
+
+{% block filmes %}
+{% endblock %}
+
+{% block videos %}
+        <br>
+        <br>
+        <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        {% load static %}
+          <link rel="stylesheet" type="text/css" href="{% static 'votacao/style.css' %}" />
+        <link rel="icon" href="https://cdn.pixabay.com/photo/2016/02/23/17/29/banana-1218133_1280.png">
+    </head>
+    <body>
+
+
+
+
+
+
+
+
+ <h1 style="color: #23232e">   Informação Pessoal </h1>
+  <hr>
+ <br>
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+        {% if user.critico.imagem == "0000000" or user.is_superuser or user.critico.imagem == "" %}
+      <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
+        {% else %}
+             <img src="{{ user.critico.imagem }}" alt="Avatar" style="width:300px;height:300px;">
+        {% endif %}
+    </div>
+    <div class="flip-card-back">
+     <h2 style="color:#c7ba50"><u>Username:</u> {{user.username}} </h2>
+         <br>
+        <h2 style="color:#c7ba50"><u>Email:</u> {{user.email}} </h2>
+
+    </div>
+  </div>
+</div>
+    <h5>(Passe o rato em cima da imagem) </h5>
+    <br>
+    <br>
+    <h2>Mudar Foto de perfil: </h2>
+    <br>
+     <form action="{% url 'votacao:mudarImagemPerfil' %}" enctype="multipart/form-data" method="POST">
+         {% csrf_token %}
+      <input type="file" name="myfile">
+    <input type="submit" value="Submit">
+         </form>
+    <br>
+    <br>
+    </body>
+
+{% endblock %}
